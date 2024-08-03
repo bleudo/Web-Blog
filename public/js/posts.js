@@ -9,25 +9,16 @@
     function openNewWindow(){
         window.open("/create_post","Text Editor")
     };
-    
-    async function editPost(event) {
+        
+    function editPost(event) {
         const postId = event.target.closest(".col").dataset.id;
         if (postId) {
-            // Obtén los detalles del post desde el servidor
-            const response = await fetch(`/post/${postId}`);
-            const post = await response.json();
-    
-            if (response.ok) {
-                // Abre la ventana de edición con los datos del post
-                window.location.href = `/create_post?id=${postId}`;
-            } else {
-                console.log("Error fetching post");
-            }
+            window.open(`/create_post?id=${postId}`, "Text Editor");
         } else {
             console.log("Post ID not found");
         }
     }
-    
+
     editBtns.forEach((btn)=>{
         btn.addEventListener("click", editPost)
     });
@@ -65,19 +56,3 @@
             console.log('Error saving title')
         }
     };
-    
-        document.getElementById('post-form').addEventListener('submit', function(event){
-    
-            // Previene el comportamiento por defecto del formulario
-            event.preventDefault();
-            
-            // Obtiene el contenido del editor de texto
-            const content = document.getElementById('text-input').innerHTML;
-
-            // Asigna el contenido al campo oculto
-            document.getElementById('content').value = content;
-            
-            // Envia el formulario
-            this.submit();
-    });
-
